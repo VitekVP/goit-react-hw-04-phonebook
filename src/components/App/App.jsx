@@ -25,13 +25,23 @@ export const App = () => {
   }, [contacts]);
 
   const addContact = ({ name, number }) => {
-    const normalizedName = name.toLocaleLowerCase();
+    const normalizedName = name.toLocaleLowerCase().trim();
     const findName = contacts.find(
       contact => contact.name.toLocaleLowerCase() === normalizedName
     );
 
     if (findName) {
       toast.error(`${name} is already in the contacts`);
+      return;
+    }
+
+    const normalizedNumber = number.toLocaleLowerCase().trim();
+    const findNumber = contacts.find(
+      contact => contact.number.toLocaleLowerCase() === normalizedNumber
+    );
+
+    if (findNumber) {
+      toast.error(`${number} is already in the contacts`);
       return;
     }
 
@@ -70,7 +80,7 @@ export const App = () => {
       <Subtitle>Contacts</Subtitle>
       <Filter value={filter} onChange={changeFilter} />
       <ContactList contacts={visibleContact} onDeleteContact={deleteContact} />
-      <ToastContainer theme="colored" autoClose={2000} position="top-right" />
+      <ToastContainer theme="colored" autoClose={4000} position="top-right" />
     </Container>
   );
 };
